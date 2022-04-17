@@ -12,10 +12,10 @@
                 <div  v-for="fixture in round.fixtures" :key="fixture.homeTeamId + fixture.guestTeamId">
                     <p class="card-text">
                         home: {{ findTeamById(fixture.homeTeamId).name }}
-                        <span v-if="fixture.homeTeamWinProbability">(with win probability: {{ fixture.homeTeamWinProbability * 100 }}%) </span>
+                        <span v-if="fixture.homeTeamWinProbability">(with win probability: {{ fixture.homeTeamWinProbability }}%) </span>
                         vs
                         guest: {{ findTeamById(fixture.guestTeamId).name }}
-                        <span v-if="fixture.guestTeamWinProbability">(with win probability: {{ fixture.guestTeamWinProbability * 100 }}%) </span>
+                        <span v-if="fixture.guestTeamWinProbability">(with win probability: {{ fixture.guestTeamWinProbability }}%) </span>
                     </p>
                 </div>
             </div>

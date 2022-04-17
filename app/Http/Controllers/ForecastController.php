@@ -11,6 +11,7 @@ class ForecastController extends Controller
 {
     public function getForecast(ForecastRequest $request, ForecastService $forecastService): JsonResponse
     {
+        // TODO matches_look_back_count is not limmited now . But we should to limit users in advance with the smallest quantity of match statistic records.
         $rounds = $request->mapToDto();
         $statisticRecordDtos = StatisticRecord::getStatistic($request->matches_look_back_count);
         $forecastedRounds = $forecastService->calculateProbabilityForEachFixture(

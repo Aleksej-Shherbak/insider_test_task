@@ -72,7 +72,7 @@ class ForecastService
             );
         }
 
-        return $res;
+        return $this->formatResult($res);
     }
 
     /**
@@ -97,7 +97,8 @@ class ForecastService
         return $rounds;
     }
 
-    private function multiplyProbability(ForecastedFixtureDto $fixture, array &$map) : void {
+    private function multiplyProbability(ForecastedFixtureDto $fixture, array &$map): void
+    {
         if (in_array($fixture->homeTeamId, $map)) {
             $map[$fixture->homeTeamId] *= $fixture->homeTeamWinProbability;
             $fixture->homeTeamWinProbability = $map[$fixture->homeTeamId];
@@ -111,5 +112,17 @@ class ForecastService
         } else {
             $map[$fixture->guestTeamId] = $fixture->guestTeamWinProbability;
         }
+    }
+
+    public function formatResult(array $rounds): array
+    {
+        foreach ($rounds as $round) {
+            foreach ($round->fixtures as $fixture) {
+                $fixture->guestTeamWinProbability = round($fixture->guestTeamWinProbability, 2) * 100;
+                $fixture->homeTeamWinProbability = round($fixture->homeTeamWinProbability, 2) * 100;
+            }
+        }
+
+        return $rounds;
     }
 }
