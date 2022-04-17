@@ -67,11 +67,11 @@ class ForecastServiceTest extends TestCase
             ),
         ];
 
-        $firstFixtureHomeTeamWinProbability = 0.35;
-        $firstFixtureGuestTeamWinProbability = 0.45;
+        $firstFixtureHomeTeamWinProbability = 35;
+        $firstFixtureGuestTeamWinProbability = 45;
 
-        $secondFixtureHomeTeamWinProbability = 0.45;
-        $secondFixtureGuestTeamWinProbability = 0.4;
+        $secondFixtureHomeTeamWinProbability = 45;
+        $secondFixtureGuestTeamWinProbability = 40;
 
         $forecastService = new ForecastService();
         $res = $forecastService->calculateProbabilityForEachFixture($rounds, $statistic, 10);

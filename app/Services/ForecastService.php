@@ -118,8 +118,8 @@ class ForecastService
     {
         foreach ($rounds as $round) {
             foreach ($round->fixtures as $fixture) {
-                $fixture->guestTeamWinProbability = round($fixture->guestTeamWinProbability, 2) * 100;
-                $fixture->homeTeamWinProbability = round($fixture->homeTeamWinProbability, 2) * 100;
+                $fixture->guestTeamWinProbability = intval($fixture->guestTeamWinProbability * 100);
+                $fixture->homeTeamWinProbability = intval($fixture->homeTeamWinProbability * 100);
             }
         }
 
