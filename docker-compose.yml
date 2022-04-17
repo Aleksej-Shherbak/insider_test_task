@@ -1,0 +1,45 @@
+version: '3.7'
+services:
+    # About dev settings https://blog.denisbondar.com/post/phpstorm_docker_xdebug
+#    php-fpm:
+#        build:
+#            context: docker/php-fpm
+#        volumes:
+#            - ./:/var/www
+#        environment:
+#            XDEBUG_CONFIG: "remote_host=192.168.220.1 remote_enable=1"
+#            PHP_IDE_CONFIG: "serverName=Docker"
+#        networks:
+#            - internal
+#
+#    nginx:
+#        build:
+#            context: docker/nginx
+#        volumes:
+#            - ./:/var/www
+#        ports:
+#            - "80:80"
+#        depends_on:
+#            - php-fpm
+#        networks:
+#            - internal
+
+    db:
+        image: postgres:latest
+        ports:
+            - "5434:5432"
+        restart: always
+        environment:
+            POSTGRES_USER: "football"
+            POSTGRES_PASSWORD: "football"
+            POSTGRES_DB: "football"
+#        networks:
+#            - internal
+#
+#networks:
+#    internal:
+#        driver: bridge
+#        ipam:
+#            driver: default
+#            config:
+#                - subnet: 192.168.220.0/28
