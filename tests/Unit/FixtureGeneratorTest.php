@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Dto\Fixture\FixtureDto;
+use App\Dto\Fixture\RoundDto;
 use App\Services\FixtureService;
 use PHPUnit\Framework\TestCase;
 
@@ -19,14 +20,16 @@ class FixtureGeneratorTest extends TestCase
         $expectedNumberOfWeeks = 6;
 
         $fixtureGenerator = new FixtureService();
-        $fixtures = collect($fixtureGenerator->generateFixtures($teamsIds));
+        $rounds = collect($fixtureGenerator->generateFixtures($teamsIds));
 
-        $this->assertEquals($expectedNumberOfWeeks, $fixtures->count());
-        $this->assertEquals(2, count($fixtures->first()));
+        $this->assertEquals($expectedNumberOfWeeks, $rounds->count());
+        $this->assertEquals(2, count($rounds->first()->fixtures));
 
         // check if there are no doubles (team does not play with itself)
-        $this->assertEquals(0, $fixtures->reduce(function (int $carry, $teams) {
-            return $carry + collect($teams)->filter(fn(FixtureDto $x) => $x->awayTeamId === $x->homeTeamId)->count();
-        }, 0));
+        foreach ($rounds as $round) {
+            foreach ($round->fixtures as $fixture) {
+                $this->assertTrue($fixture->homeTeamId !== $fixture->awayTeamId);
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Dto\Fixture\FixtureDto;
+use App\Dto\Fixture\RoundDto;
 use ScheduleBuilder;
 
 /**
@@ -12,7 +13,7 @@ use ScheduleBuilder;
 class FixtureService
 {
     /**
-     * @return FixtureDto[]
+     * @return RoundDto[]
      */
     public function generateFixtures($teamIds): array
     {
@@ -22,6 +23,10 @@ class FixtureService
         return $this->mapToDto($schedule);
     }
 
+    /**
+     * @param array $schedule
+     * @return RoundDto[]
+     */
     private function mapToDto(array $schedule): array {
         $res = [];
         foreach ($schedule as $scheduleItem) {
@@ -30,7 +35,7 @@ class FixtureService
                 $fixturesList[] = new FixtureDto(homeTeamId: $fixture[0], awayTeamId: $fixture[1]);
             }
 
-            $res[] = $fixturesList;
+            $res[] = new RoundDto(fixtures: $fixturesList);
         }
 
         return $res;

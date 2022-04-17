@@ -2,7 +2,7 @@
 
 namespace App\Dto\Forecast;
 
-class ForecastDto
+class ForecastedFixtureDto
 {
     public function __construct(
         public float $homeTeamWinProbability,

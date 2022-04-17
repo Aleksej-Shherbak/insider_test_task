@@ -5,7 +5,7 @@ const store = createStore({
     state() {
         return {
             teams: [],
-            getFixturesLists: [],
+            rounds: [],
         }
     },
     mutations: {
@@ -13,12 +13,12 @@ const store = createStore({
             state.teams = teams;
         },
         setFixturesList(state, fixtures) {
-            state.getFixturesLists = fixtures;
+            state.rounds = fixtures;
         }
     },
     getters: {
         getTeams: state => state.teams,
-        getFixturesLists: state => state.getFixturesLists,
+        getRounds: state => state.rounds,
     },
     actions: {
         async fetchAllTeams({ commit }) {
