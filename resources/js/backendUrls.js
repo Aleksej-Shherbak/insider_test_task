@@ -6,8 +6,8 @@ const backendUrls = {
     fixtures: {
         calculate: 'calculate-fixtures'
     },
-    statistic: {
-        allTeams: 'all-teams-statistic'
+    forecast: {
+        getForecast: 'get-forecast'
     }
 }
 

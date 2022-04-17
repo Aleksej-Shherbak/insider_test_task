@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\FixtureController;
-use App\Http\Controllers\StatisticController;
+use App\Http\Controllers\ForecastController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +18,4 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/teams', [TeamController::class, 'all']);
 Route::post('/calculate-fixtures', [FixtureController::class, 'calculateFixtures']);
-Route::get('/all-teams-statistic', [StatisticController::class, 'getAllTeamsStatistic']);
+Route::post('/get-forecast', [ForecastController::class, 'getForecast']);

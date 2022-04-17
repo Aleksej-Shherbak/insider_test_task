@@ -1,14 +1,10 @@
 <template>
     <div>
         <h1>Matches schedule</h1>
-        <p>How many weeks should be calculated:</p>
+        <p>Previous matches number to analyze:</p>
         <div class="d-flex flex-row mb-1">
-            <Counter :max="this.roundsNumbers"></Counter>
-
-            <label class="mx-4" for="matches-number-input">Previous matches number to analyze:</label>
-            <input type="number" id="matches-number-input" class=" matches-number-input form-control" min="0">
-
-            <button class="btn btn-sm btn-success mx-2">Start forecasting</button>
+            <Counter @countChanged="countChangedHandler" :min="10" :max="this.roundsNumbers"></Counter>
+            <button @click="getForecast" class="btn btn-sm btn-success mx-2">Start forecasting</button>
         </div>
         <div class="card my-1" v-for="(round, index) in this.getRounds" :key="index">
             <div class="card-body">
@@ -23,6 +19,7 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import Counter from "./Counter";
+import backendUrls from "../js/backendUrls";
 
 export default {
     name: "Fixtures",
@@ -30,7 +27,11 @@ export default {
         Counter
     },
     created() {
-
+    },
+    data() {
+        return {
+            matchesLookBackCount: 10
+        }
     },
     computed: {
         ...mapGetters([
@@ -42,11 +43,17 @@ export default {
         }
     },
     methods: {
-        ...mapActions([
+        countChangedHandler(value) {
 
-        ]),
+        },
         findTeamById(teamId) {
-            return  this.getTeams.find(({ id }) => id === teamId );
+            return this.getTeams.find(({ id }) => id === teamId );
+        },
+        async getForecast() {
+            await window.axios.post(`${backendUrls.base}/${backendUrls.forecast.getForecast}`, {
+                rounds: this.getRounds,
+                matches_look_back_count: this.matchesLookBackCount
+            })
         }
     }
 }

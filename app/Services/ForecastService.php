@@ -5,7 +5,6 @@ namespace App\Services;
 use App\Dto\Fixture\RoundDto;
 use App\Dto\Forecast\ForecastedFixtureDto;
 use App\Dto\Forecast\ForecastedRoundDto;
-use App\Dto\Statistic\GroupedWinProbabilityDto;
 use App\Dto\Statistic\StatisticRecordDto;
 
 class ForecastService
@@ -77,13 +76,13 @@ class ForecastService
     }
 
     /**
-     * @param RoundDto[] $rounds
-     * @return GroupedWinProbabilityDto[]
+     * Multiply probabilities because they are bound.
+     * @param ForecastedRoundDto[] $rounds
+     * @return ForecastedRoundDto[]
      */
     public function probabilitiesMultiplication(array $rounds): array
     {
         $map = [];
-
         /**
          * $homeTeamWinProbability
          * $guestTeamWinProbability
@@ -91,10 +90,26 @@ class ForecastService
          * $guestTeamId
          */
         foreach ($rounds as $round) {
-            foreach ($round as $fixture) {
-
+            foreach ($round->fixtures as $fixture) {
+                $this->multiplyProbability($fixture, $map);
             }
         }
+        return $rounds;
     }
 
+    private function multiplyProbability(ForecastedFixtureDto $fixture, array &$map) : void {
+        if (in_array($fixture->homeTeamId, $map)) {
+            $map[$fixture->homeTeamId] *= $fixture->homeTeamWinProbability;
+            $fixture->homeTeamWinProbability = $map[$fixture->homeTeamId];
+        } else {
+            $map[$fixture->homeTeamId] = $fixture->homeTeamWinProbability;
+        }
+
+        if (in_array($fixture->guestTeamId, $map)) {
+            $map[$fixture->guestTeamId] *= $fixture->guestTeamWinProbability;
+            $fixture->guestTeamWinProbability = $map[$fixture->guestTeamId];
+        } else {
+            $map[$fixture->guestTeamId] = $fixture->guestTeamWinProbability;
+        }
+    }
 }
