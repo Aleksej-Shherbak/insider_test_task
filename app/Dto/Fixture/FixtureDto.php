@@ -6,7 +6,7 @@ class FixtureDto
 {
     public function __construct(
         public int $homeTeamId,
-        public int $awayTeamId,
+        public int $guestTeamId,
     )
     {
     }

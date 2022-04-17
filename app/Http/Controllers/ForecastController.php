@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ForecastRequest;
 use App\Models\StatisticRecord;
 use App\Services\ForecastService;
+use Illuminate\Http\JsonResponse;
 
 class ForecastController extends Controller
 {
-    public function getForecast(ForecastRequest $request, ForecastService $forecastService): array
+    public function getForecast(ForecastRequest $request, ForecastService $forecastService): JsonResponse
     {
         $rounds = $request->mapToDto();
         $statisticRecordDtos = StatisticRecord::getStatistic($request->matches_look_back_count);
@@ -17,6 +18,6 @@ class ForecastController extends Controller
             statisticRecords: $statisticRecordDtos,
             lookMatchesBack: $request->matches_look_back_count);
         $forecastedRoundsMultiplicationProbabilities = $forecastService->probabilitiesMultiplication($forecastedRounds);
-        response()->json($forecastedRoundsMultiplicationProbabilities);
+        return response()->json($forecastedRoundsMultiplicationProbabilities);
     }
 }

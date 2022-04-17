@@ -22,7 +22,7 @@ class ForecastServiceTest extends TestCase
                 fixtures: [
                     new FixtureDto(
                         homeTeamId: 1,
-                        awayTeamId: 2,
+                        guestTeamId: 2,
                     )
                 ]
             ),
@@ -30,7 +30,7 @@ class ForecastServiceTest extends TestCase
                 fixtures: [
                     new FixtureDto(
                         homeTeamId: 2,
-                        awayTeamId: 1,
+                        guestTeamId: 1,
                     )
                 ]
             )

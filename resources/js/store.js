@@ -12,7 +12,7 @@ const store = createStore({
         setTeams(state, teams) {
             state.teams = teams;
         },
-        setFixturesList(state, fixtures) {
+        setRounds(state, fixtures) {
             state.rounds = fixtures;
         }
     },
@@ -29,7 +29,7 @@ const store = createStore({
             const res = await window.axios.post(`${backendUrls.base}/${backendUrls.fixtures.calculate}`, {
                 teams_ids: teamIds
             });
-            commit('setFixturesList', res.data);
+            commit('setRounds', res.data);
         }
     }
 });

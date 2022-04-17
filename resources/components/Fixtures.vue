@@ -4,20 +4,27 @@
         <p>Previous matches number to analyze:</p>
         <div class="d-flex flex-row mb-1">
             <Counter @countChanged="countChangedHandler" :min="10" :max="this.roundsNumbers"></Counter>
-            <button @click="getForecast" class="btn btn-sm btn-success mx-2">Start forecasting</button>
+            <button @click="fetchForecasts" class="btn btn-sm btn-success mx-2">Start forecasting</button>
         </div>
         <div class="card my-1" v-for="(round, index) in this.getRounds" :key="index">
             <div class="card-body">
                 <h5 class="card-title">Week {{ index + 1 }}</h5>
-                <p class="card-text" v-for="fixture in round.fixtures" :key="fixture.homeTeamId + fixture.awayTeamId">
-                    home: {{ findTeamById(fixture.homeTeamId).name }} vs guest: {{ findTeamById(fixture.awayTeamId).name }}</p>
+                <div  v-for="fixture in round.fixtures" :key="fixture.homeTeamId + fixture.guestTeamId">
+                    <p class="card-text">
+                        home: {{ findTeamById(fixture.homeTeamId).name }}
+                        <span v-if="fixture.homeTeamWinProbability">(with win probability: {{ fixture.homeTeamWinProbability * 100 }}%) </span>
+                        vs
+                        guest: {{ findTeamById(fixture.guestTeamId).name }}
+                        <span v-if="fixture.guestTeamWinProbability">(with win probability: {{ fixture.guestTeamWinProbability * 100 }}%) </span>
+                    </p>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters, mapMutations } from 'vuex';
 import Counter from "./Counter";
 import backendUrls from "../js/backendUrls";
 
@@ -30,7 +37,7 @@ export default {
     },
     data() {
         return {
-            matchesLookBackCount: 10
+            matchesLookBackCount: 10,
         }
     },
     computed: {
@@ -43,18 +50,23 @@ export default {
         }
     },
     methods: {
+        ...mapMutations([
+            'setRounds'
+        ]),
         countChangedHandler(value) {
-
+            this.matchesLookBackCount = value;
         },
         findTeamById(teamId) {
             return this.getTeams.find(({ id }) => id === teamId );
         },
-        async getForecast() {
-            await window.axios.post(`${backendUrls.base}/${backendUrls.forecast.getForecast}`, {
+        async fetchForecasts() {
+            let response = await window.axios.post(`${backendUrls.base}/${backendUrls.forecast.getForecast}`, {
                 rounds: this.getRounds,
                 matches_look_back_count: this.matchesLookBackCount
-            })
-        }
+            });
+
+            this.setRounds(response.data);
+        },
     }
 }
 </script>

@@ -51,7 +51,7 @@ class ForecastService
                  * @var StatisticRecordDto
                  */
                 $homeTeamStatRecord = $statisticRecords->first(fn(StatisticRecordDto $x) => !$x->isTeamGuest && $x->teamId === $fixture->homeTeamId);
-                $guestTeamStatRecord = $statisticRecords->first(fn(StatisticRecordDto $x) => $x->isTeamGuest && $x->teamId === $fixture->awayTeamId);
+                $guestTeamStatRecord = $statisticRecords->first(fn(StatisticRecordDto $x) => $x->isTeamGuest && $x->teamId === $fixture->guestTeamId);
                 if ($homeTeamStatRecord === null || $guestTeamStatRecord === null) {
                     continue;
                 }
@@ -62,7 +62,7 @@ class ForecastService
                     homeTeamWinProbability: $homeTeamWinProbability,
                     guestTeamWinProbability: $guestTeamWinProbability,
                     homeTeamId: $fixture->homeTeamId,
-                    guestTeamId: $fixture->awayTeamId,
+                    guestTeamId: $fixture->guestTeamId,
                 );
 
                 $forecastedFixtures[] = $forecastDto;

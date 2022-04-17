@@ -42,6 +42,6 @@ class ForecastRequest extends FormRequest
         return collect($this->rounds)
             ->map(fn($x) => new RoundDto(
                 fixtures: collect($x['fixtures'])
-                    ->map(fn ($fixture) => new FixtureDto(homeTeamId: $fixture['homeTeamId'], awayTeamId: $fixture['awayTeamId']))->toArray()))->toArray();
+                    ->map(fn ($fixture) => new FixtureDto(homeTeamId: $fixture['homeTeamId'], guestTeamId: $fixture['guestTeamId']))->toArray()))->toArray();
     }
 }

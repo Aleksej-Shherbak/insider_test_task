@@ -32,7 +32,7 @@ class FixtureService
         foreach ($schedule as $scheduleItem) {
             $fixturesList = [];
             foreach ($scheduleItem as $fixture) {
-                $fixturesList[] = new FixtureDto(homeTeamId: $fixture[0], awayTeamId: $fixture[1]);
+                $fixturesList[] = new FixtureDto(homeTeamId: $fixture[0], guestTeamId: $fixture[1]);
             }
 
             $res[] = new RoundDto(fixtures: $fixturesList);

@@ -28,7 +28,7 @@ class FixtureGeneratorTest extends TestCase
         // check if there are no doubles (team does not play with itself)
         foreach ($rounds as $round) {
             foreach ($round->fixtures as $fixture) {
-                $this->assertTrue($fixture->homeTeamId !== $fixture->awayTeamId);
+                $this->assertTrue($fixture->homeTeamId !== $fixture->guestTeamId);
             }
         }
     }
