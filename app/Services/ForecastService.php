@@ -83,12 +83,6 @@ class ForecastService
     public function probabilitiesMultiplication(array $rounds): array
     {
         $map = [];
-        /**
-         * $homeTeamWinProbability
-         * $guestTeamWinProbability
-         * $homeTeamId
-         * $guestTeamId
-         */
         foreach ($rounds as $round) {
             foreach ($round->fixtures as $fixture) {
                 $this->multiplyProbability($fixture, $map);
