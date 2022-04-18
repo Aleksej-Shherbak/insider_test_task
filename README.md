@@ -54,3 +54,4 @@ Then I multiplied every probability, week by week because the events are bound.
 
 All the data is generated with the help of seeding and the statistic is random and only for demonstration purposes.
 
+!!! `.env` is in the repo for demonstration purposes only. Do not do it in real world application.
