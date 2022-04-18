@@ -42,7 +42,8 @@ Then I multiplied every probability, week by week because the events are bound.
 4) In your terminal type `docker-compose up -d`
 5) Type `docker-compose exec php-fpm bash`
 6) Being inside the container run the following in you terminal `composer install && npm install && npm run dev && php artisan migrate --seed`
-7) Go to `http://localhost/` in your browser
+7) Run tests `php artisan test`
+8) Go to `http://localhost/` in your browser
 
 ## Screenshots 
 
@@ -52,3 +53,4 @@ Then I multiplied every probability, week by week because the events are bound.
 ## Note 
 
 All the data is generated with the help of seeding and the statistic is random and only for demonstration purposes.
+
