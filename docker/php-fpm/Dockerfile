@@ -6,7 +6,9 @@ ARG uid
 
 RUN apt-get update && apt-get install -y wget git unzip curl  \
     && apt-get install libpq-dev -y \
-    && docker-php-ext-install pdo pdo_pgsql pgsql
+    && docker-php-ext-install pdo pdo_pgsql pgsql \
+    && apt-get install nodejs -y \
+    && apt-get install npm -y
 
 RUN wget https://getcomposer.org/installer -O - -q \
     | php -- --install-dir=/bin --filename=composer --quiet
