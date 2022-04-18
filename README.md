@@ -1,64 +1,54 @@
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Test task
 
-## About Laravel
+Create an application that predicts the result of the victory of football teams in the tournament.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Implementation
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Algorithm that I've used:
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+To calculate the probability of a home team winning, find the sum of its wins in the last 10 home games and its
+opponent's losses in the last 10 away games. Next, divide the resulting number by 20 (the total number of games)
+and multiply by 100. Thus, you have found the percentage probability of the home team winning.
 
-## Learning Laravel
+To find out the probability of a draw, add up the draws of the teams in the last 10 games and divide the total
+by 20, and then also multiply the resulting number by 100.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+According to the same principle, the probability of the guest team winning is determined.
+It is necessary to add up the team's away wins in the last 10 away games and add to them the opponent's home
+defeats in the last 10 home matches. Next, the resulting number must be divided by 20 and multiplied by 100.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Let's make a calculation using the example of the RFPL game between Kazan Rubin and Zenit St. Petersburg.
 
-## Laravel Sponsors
+Rubin's statistics in home games: 4 wins, 2 draws and 4 losses.
+Zenit statistics in away games: 6 wins, 4 draws and 0 losses.
+We determine the probability of passing outcomes:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Rubin's victory: 4 (Rubin's victories) + 0 (Zenit's defeats)=4, 4/20*100=20% ( probability of Ruby's victory)
+Draw: 2(Rubin draws) + 4(Zenit draws)=6, 6/20*100=30% ( probability of a draw)
+Zenit Victory: 6 (Zenit wins)+4 (Rubin defeats)=10, 10/20*100=50% ( the probability of Zenit's victory)
 
-### Premium Partners
+Source: https://bukmekerskie-kontory.bet/betting/wiki/probs/
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Then I multiplied every probability, week by week because the events are bound. 
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## How use this solution
 
-## Code of Conduct
+1) You should have `docker` and `docker-compose` installed. 
+2) Clone repo
+3) Be sure in you have port 80 free
+4) In your terminal type `docker-compose up -d`
+5) Type `docker-compose exec php-fpm bash`
+6) Being inside the container run the following in you terminal `composer install && npm install && npm run dev && php artisan migrate --seed`
+7) Go to `http://localhost/` in your browser
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Screenshots 
 
-## Security Vulnerabilities
+![home png](readme_imgs/home.png)
+![forecast png](readme_imgs/forecast_screan.png)
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Note 
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+All the data is generated with the help of seeding and the statistic is random and only for demonstration purposes.
